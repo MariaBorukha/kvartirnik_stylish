@@ -71,13 +71,38 @@
 
 ---
 
+## Локальные секреты (`.env`)
+
+Файл `.env` лежит в корне папки и содержит переменные окружения для работы с GitHub.  
+Он добавлен в `.gitignore` — на GitHub **не попадает**.
+
+```
+GITHUB_TOKEN=<personal access token>   # токен для git push через HTTPS
+GITHUB_REPO=https://github.com/MariaBorukha/kvartirnik_stylish
+GITHUB_PAGES=https://mariaborukha.github.io/kvartirnik_stylish/
+```
+
+**Как использовать токен при пуше вручную:**
+```bash
+source .env
+git remote set-url origin https://x-access-token:$GITHUB_TOKEN@github.com/MariaBorukha/kvartirnik_stylish.git
+git push
+```
+
+**Ротация токена:** если токен скомпрометирован или истёк —
+1. Отозвать старый: [github.com/settings/tokens](https://github.com/settings/tokens) → Revoke
+2. Создать новый с правами `repo`
+3. Заменить значение `GITHUB_TOKEN=` в `.env`
+
+---
+
 ## Деплой
 
 Сайт публикуется автоматически через **GitHub Pages** при любом пуше в ветку `main`.
 
 Чтобы обновить сайт:
 ```bash
-cd ~/Documents/Flatnik_GitHub_Stylish
+cd ~/Documents/Flatnik_context/Flatnik_GitHub_Stylish
 # редактируем нужные .html или styles.css
 git add .
 git commit -m "описание изменений"
